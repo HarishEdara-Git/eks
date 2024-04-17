@@ -19,10 +19,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Use eks/eks-ctl action (recommended)
-        uses: eks/eks-ctl@v1  # This action handles authentication for you
+      - name: Use eksctl/eksctl action (recommended)
+        uses: eksctl/eksctl@v1  # This action handles authentication for you
         with:
-          cluster: ${{ env.CLUSTER_NAME }}
+          cluster-name: ${{ env.CLUSTER_NAME }}
           region: ${{ env.AWS_REGION }}
 
       - name: Apply deployment.yml
