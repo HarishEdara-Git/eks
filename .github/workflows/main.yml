@@ -33,7 +33,7 @@ jobs:
         run: kubectl config view
 
       - name: Apply deployment.yml
-        run: kubectl apply -f deployment.yml -n ${{ env.NAMESPACE }} --validate=false
+        run: kubectl apply -f deployment.yml -n ${{ env.NAMESPACE }}
 
       - name: Apply service.yml
         run: kubectl apply -f service.yml -n ${{ env.NAMESPACE }}
