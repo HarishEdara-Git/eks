@@ -29,8 +29,11 @@ jobs:
       - name: Update kubeconfig with EKS credentials
         run: aws eks update-kubeconfig --name ${{ env.CLUSTER_NAME }} --region ${{ env.AWS_REGION }}
 
-      - name: Apply deployment.yml
+      - name: Verify kubeconfig
+        run: kubectl config view
+
+      - name: Apply deployment YAML
         run: kubectl apply -f deployment.yml -n ${{ env.NAMESPACE }} --validate=false
 
-      - name: Apply service.yml
+      - name: Apply service YAML
         run: kubectl apply -f service.yml -n ${{ env.NAMESPACE }}
