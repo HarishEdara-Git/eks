@@ -1,0 +1,32 @@
+name: Deploy Pods and Services to EKS
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AWS_REGION: ap-south-1  # Replace with your AWS region
+  CLUSTER_NAME: harisheks  # Replace with your EKS cluster name
+  NAMESPACE: my-namespace  # Replace with your namespace
+
+jobs:
+  deploy:
+    name: Deploy Pod and Service
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Use eks/eks-ctl action (recommended)
+        uses: eks/eks-ctl@v1  # This action handles authentication for you
+        with:
+          cluster: ${{ env.CLUSTER_NAME }}
+          region: ${{ env.AWS_REGION }}
+
+      - name: Apply deployment.yml
+        run: kubectl apply -f deployment.yml -n ${{ env.NAMESPACE }}
+
+      - name: Apply service.yml
+        run: kubectl apply -f service.yml -n ${{ env.NAMESPACE }}
