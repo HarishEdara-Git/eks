@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  AWS_REGION: ap-south-1  # Replace with your AWS region
+  AWS_REGION: ap-south-a # Replace with your AWS region
   CLUSTER_NAME: harisheks  # Replace with your EKS cluster name
   NAMESPACE: my-namespace  # Replace with your namespace
 
@@ -19,11 +19,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Use eksctl/eksctl action (recommended)
-        uses: eksctl/eksctl@v1  # This action handles authentication for you
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
         with:
-          cluster-name: ${{ env.CLUSTER_NAME }}
-          region: ${{ env.AWS_REGION }}
+          aws-access-key-id: AKIA5CA4RZCYMHFEQ25N
+          aws-secret-access-key: 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
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Update kubeconfig with EKS credentials
+        run: aws eks update-kubeconfig --name ${{ env.CLUSTER_NAME }} --region ${{ env.AWS_REGION }}
 
       - name: Apply deployment.yml
         run: kubectl apply -f deployment.yml -n ${{ env.NAMESPACE }}
