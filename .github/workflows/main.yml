@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  AWS_REGION: ap-south-a # Replace with your AWS region
+  AWS_REGION: ap-south-1 # Replace with your AWS region
   CLUSTER_NAME: harisheks  # Replace with your EKS cluster name
   NAMESPACE: my-namespace  # Replace with your namespace
 
