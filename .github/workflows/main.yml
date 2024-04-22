@@ -8,7 +8,7 @@ on:
 env:
   AWS_REGION: ap-south-1 # Replace with your AWS region
   CLUSTER_NAME: harisheks  # Replace with your EKS cluster name
-  NAMESPACE: my-namespace  # Replace with your namespac
+  NAMESPACE: harish-ns  # Replace with your namespace
 
 jobs:
   deploy:
@@ -31,6 +31,9 @@ jobs:
 
       - name: Verify kubeconfig
         run: kubectl config view
+
+      - name: Port forward to sample-service
+        run: kubectl port-forward service/sample-service 8080:80 -n ${{ env.NAMESPACE }} &
 
       - name: Apply deployment.yml
         run: kubectl apply -f deployment.yml -n ${{ env.NAMESPACE }}
